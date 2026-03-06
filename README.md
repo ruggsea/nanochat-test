@@ -47,6 +47,20 @@ generated = outputs[0, inputs["input_ids"].shape[1]:]
 print(tokenizer.decode(generated, skip_special_tokens=True))
 ```
 
+## Benchmark
+
+On NVIDIA H200, bfloat16, using HF `.generate()` with greedy decoding:
+
+| Tokens | Time | Speed |
+|--------|------|-------|
+| 32 | 0.91s | 35.2 tok/s |
+| 64 | 1.88s | 34.1 tok/s |
+| 128 | 3.81s | 33.6 tok/s |
+| 256 | 6.92s | 37.0 tok/s |
+| Batch 5x64 | 2.06s | 155.3 tok/s |
+
+Peak GPU memory: 3.7 GB
+
 ## Notes
 
 - The model needs `revision="refs/pr/1"` - that's the PR adding native transformers support to karpathy's repo
